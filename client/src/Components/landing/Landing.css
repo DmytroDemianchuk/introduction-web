@@ -1,0 +1,43 @@
+/* Landing.css */
+
+/* Container styles */
+.container {
+    max-width: 36rem;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+    text-align: center; /* Center text horizontally */
+  }
+  
+  /* Text styles */
+  .text {
+    font-size: 1.875rem; /* 3xl */
+    margin-bottom: 1.25rem; /* 5 */
+  }
+  
+  /* Button container styles */
+  .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  /* Button styles */
+  .button {
+    margin: 0 0.625rem; /* 10px */
+  }
+  
+  /* Register button styles */
+  .button.register {
+    background-color: #38a169; /* Green */
+    color: #fff; /* White */
+  }
+  
+  /* Login button styles */
+  .button.login {
+    background-color: transparent;
+    color: #38a169; /* Green */
+  }
+  
