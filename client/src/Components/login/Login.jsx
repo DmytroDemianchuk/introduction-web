@@ -24,7 +24,7 @@ class Login extends Component {
       password: '',
       message: '',
       isInvalid: false,
-      endpoint: 'http://localhost:8080/login',
+      endpoint: 'http://localhost:8000/auth/sign-in',
       redirect: false,
       redirectTo: '/chat?u=',
     };

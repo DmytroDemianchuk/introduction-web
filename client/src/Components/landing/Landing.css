@@ -1,9 +1,6 @@
-/* Landing.css */
 
-/* Container styles */
 .container {
-    max-width: 36rem;
-    margin-top: 3rem;
+    margin-top: 10rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,13 +28,11 @@
   
   /* Register button styles */
   .button.register {
-    background-color: #38a169; /* Green */
-    color: #fff; /* White */
+    background-color: transparent;
   }
   
   /* Login button styles */
   .button.login {
     background-color: transparent;
-    color: #38a169; /* Green */
   }
   
