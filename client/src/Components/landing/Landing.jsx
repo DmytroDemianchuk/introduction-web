@@ -9,14 +9,12 @@ function Landing ()  {
         This is a simple application of registerations 
       </div>
       <div>
-        <div className="buttons" direction="row" spacing={7}>
-            <div
-              className="button register"
-            >
+        <div className="buttons" direction="row" spacing={7} type="submit">
+            <div className="button_register">
               <a href="/register">Register</a>
             </div>
 
-            <div className="button login" >
+            <div className="button_login" >
               <a href="/login">Login</a> 
             </div>
         </div>

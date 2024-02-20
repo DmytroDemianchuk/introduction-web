@@ -36,3 +36,28 @@
     background-color: transparent;
   }
   
+
+  .buttons {
+    display: inline-block;
+    border: 0;
+    padding: 0;
+    outline: 0;
+    text-align: center;
+    text-decoration: none!important;
+    overflow: hidden;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    height: 36px;
+    border-radius: 10px;
+    color: #000;
+    font-size: 18px;
+    line-height: 36px;
+    font-weight: 600;
+    white-space: nowrap;
+    background: #f6d811;
+    -webkit-transition: all .15s ease;
+    transition: all .15s ease;
+  }

@@ -2,19 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import {
-  Container,
   FormControl,
   FormLabel,
   FormErrorMessage,
   FormHelperText,
-  Box,
   Input,
-  Stack,
-  Button,
 } from '@chakra-ui/react';
 
-import { EditIcon } from '@chakra-ui/icons';
-import { Navigate } from 'react-router-dom';
 
 class Register extends Component {
   constructor(props) {
@@ -24,7 +18,7 @@ class Register extends Component {
       password: '',
       message: '',
       isInvalid: '',
-      endpoint: 'http://localhost:8000//auth/sign-up',
+      endpoint: 'http://localhost:8000/auth/sign-up',
       redirect: false,
       redirectTo: '/chat?u=',
     };
@@ -61,13 +55,10 @@ class Register extends Component {
   render() {
     return (
       <div>
-        {this.state.redirect && (
-          <Navigate to={this.state.redirectTo} replace={true}></Navigate>
-        )}
 
-        <Container marginBlockStart={10} textAlign={'left'} maxW="2xl">
-          <Box borderRadius="lg" padding={10} borderWidth="2px">
-            <Stack spacing={5}>
+        <div marginBlockStart={10} textAlign={'left'} maxW="2xl">
+          <div borderRadius="lg" padding={10} borderWidth="2px">
+            <div spacing={5}>
               <FormControl isInvalid={this.state.isInvalid}>
                 <FormLabel>Username</FormLabel>
                 <Input
@@ -96,19 +87,18 @@ class Register extends Component {
                 />
                 <FormHelperText>use a dummy password</FormHelperText>
               </FormControl>
-              <Button
+              <div
                 size="lg"
-                leftIcon={<EditIcon />}
                 colorScheme="green"
                 variant="solid"
                 type="submit"
                 onClick={this.onSubmit}
               >
                 Register
-              </Button>
-            </Stack>
-          </Box>
-        </Container>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
