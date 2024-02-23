@@ -1,0 +1,12 @@
+port: 8000
+
+auth:
+  hash_salt: "hash_salt"
+  signing_key: "signing_key"
+  token_ttl: 86400
+
+mongo:
+  uri: "mongodb://mongodb:27017"
+  name: "database"
+  user_collection: "users"
+  product_collection: "products"
