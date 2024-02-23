@@ -1,107 +1,133 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import "./Register.css";
 
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-} from '@chakra-ui/react';
+function Register() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    isInvalid: false,
+    message: '',
+  });
 
+  const { name, email, password, phone, isInvalid, message } = formData;
 
-class Register extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      message: '',
-      isInvalid: '',
-      endpoint: 'http://localhost:8000/auth/sign-up',
-      redirect: false,
-      redirectTo: '/chat?u=',
-    };
-  }
-
-  // on change of input, set the value to the message state
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+  const onChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  onSubmit = async e => {
+  const onSubmit = async e => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(this.state.endpoint, {
-        username: this.state.username,
-        password: this.state.password,
+      const res = await axios.post('http://localhost:8000/create-name', {
+        name,
+        email,
+        password,
+        phone,
       });
 
       console.log('register', res);
       if (res.data.status) {
-        const redirectTo = this.state.redirectTo + this.state.username;
-        this.setState({ redirect: true, redirectTo });
+        // Handle success response here
+        console.log('Success:', res.data);
       } else {
-        // on failed
-        this.setState({ message: res.data.message, isInvalid: true });
+        // Handle failed response here
+        setFormData({ ...formData, message: res.data.message, isInvalid: true });
       }
     } catch (error) {
-      console.log(error);
-      this.setState({ message: 'something went wrong', isInvalid: true });
+      console.error('Error:', error);
+      setFormData({ ...formData, message: 'Ця електронна пошта вже зайнята', isInvalid: true });
     }
   };
 
-  render() {
-    return (
-      <div>
-
-        <div marginBlockStart={10} textAlign={'left'} maxW="2xl">
-          <div borderRadius="lg" padding={10} borderWidth="2px">
-            <div spacing={5}>
-              <FormControl isInvalid={this.state.isInvalid}>
-                <FormLabel>Username</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Username"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                />
-
-                {!this.state.isInvalid ? (
-                  <></>
-                ) : (
-                  <FormErrorMessage>{this.state.message}</FormErrorMessage>
-                )}
-                {/* <FormHelperText>use a unique username</FormHelperText> */}
-              </FormControl>
-              <FormControl>
-                <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                />
-                <FormHelperText>use a dummy password</FormHelperText>
-              </FormControl>
-              <div
-                size="lg"
-                colorScheme="green"
-                variant="solid"
-                type="submit"
-                onClick={this.onSubmit}
-              >
-                Register
-              </div>
-            </div>
+  return (
+    <div className="signup_form">
+      <div className="sign_form-body">
+        <h2 className="head-name">Реєстрація</h2>
+        <form onSubmit={onSubmit}>
+          <div className="signup_form-head">
+            <label htmlFor="request-title">Ім'я та прізвище</label>
+            <input
+              className="input"
+              name="name"
+              id="request-title"
+              type="text"
+              placeholder="type your username"
+              value={name}
+              onChange={onChange}
+            />
+            {/* <FormErrorMessage v-if="isInvalid">{message}</FormErrorMessage> */}
           </div>
-        </div>
+
+          <div>
+            <label htmlFor="email">Електронна пошта</label>
+            <input
+              name="email"
+              id="request-email"
+              className="input"
+              type="text"
+              value={email}
+              onChange={onChange}
+            />
+            {isInvalid && <span className="error-message">{message}</span>}
+          </div>
+
+          <div>
+            <label htmlFor="request-email">Пароль</label>
+            <input
+              name="password"
+              id="request-email"
+              className="input"
+              type="password"
+              value={password}
+              onChange={onChange}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="request-phone">Телефон</label>
+            <input
+              id="request-phone"
+              className="input"
+              type="text"
+              value={phone}
+              onChange={onChange}
+              required
+              autoComplete="off"
+              placeholder="980 123 540"
+            />
+          </div>
+
+          <div className="signup_agreement">
+            <label className="signup_for-label">
+              <input className="label_controll" type="checkbox" checked />
+              <i className="checkbox"></i>
+              <span className="label_text">
+                Підтверджую свою згоду з умовами
+                <br />
+                <a href="/license" target="_blank">
+                  ліцензійного договору
+                </a>
+              </span>
+            </label>
+          </div>
+
+          <button className="button_submit" type="submit" id="submitButton">
+            <span className="button_content">Зареєструватись</span>
+          </button>
+
+          <button className="button_submit" type="submit" id="submitButton">
+            <a className="button_content" href="signin">
+              Увійти
+            </a>
+          </button>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Register;
