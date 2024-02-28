@@ -1,0 +1,28 @@
+package database
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+)
+
+const connectionString = "mongodb+srv://Dmytro:moqi7e123@mongodb.nuim2dr.mongodb.net/?retryWrites=true&w=majority&appName=MongoDB"
+const dbName = "people"
+const colName = "watchlist"
+
+var collection *mongo.Collection
+
+func init() {
+	clientOption := options.Client().ApplyURI(connectionString)
+	client, err := mongo.Connect(context.TODO(), clientOption)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("MongoDB connection success")
+	collection = client.Database(dbName).Collection(colName)
+	fmt.Println("Collection instance is ready")
+}
