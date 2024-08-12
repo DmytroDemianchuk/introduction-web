@@ -46,16 +46,17 @@ function Register() {
   return (
     <div className="signup_form">
       <div className="sign_form-body">
-        <h2 className="head-name">Реєстрація</h2>
+        <h2 className="head-name">Get Start Now</h2>
         <form onSubmit={onSubmit}>
+
           <div className="signup_form-head">
-            <label htmlFor="request-title">Ім'я та прізвище</label>
+            <label htmlFor="request-title">Name</label>
             <input
               className="input"
               name="name"
               id="request-title"
               type="text"
-              placeholder="type your username"
+              placeholder="Enter your name"
               value={name}
               onChange={onChange}
             />
@@ -63,12 +64,13 @@ function Register() {
           </div>
 
           <div>
-            <label htmlFor="email">Електронна пошта</label>
+            <label htmlFor="email">Email address</label>
             <input
               name="email"
               id="request-email"
               className="input"
               type="text"
+              placeholder="Enter your email"
               value={email}
               onChange={onChange}
             />
@@ -76,42 +78,22 @@ function Register() {
           </div>
 
           <div>
-            <label htmlFor="request-email">Пароль</label>
+            <label htmlFor="request-email">Password</label>
             <input
               name="password"
               id="request-email"
               className="input"
               type="password"
+              placeholder="Enter your password"
               value={password}
               onChange={onChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="request-phone">Телефон</label>
-            <input
-              id="request-phone"
-              className="input"
-              type="text"
-              value={phone}
-              onChange={onChange}
-              required
-              autoComplete="off"
-              placeholder="980 123 540"
             />
           </div>
 
           <div className="signup_agreement">
             <label className="signup_for-label">
               <input className="label_controll" type="checkbox" checked />
-              <i className="checkbox"></i>
-              <span className="label_text">
-                Підтверджую свою згоду з умовами
-                <br />
-                <a href="/license" target="_blank">
-                  ліцензійного договору
-                </a>
-              </span>
+              <i className="checkbox">I agree to the terms & policy</i>
             </label>
           </div>
 

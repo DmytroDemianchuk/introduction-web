@@ -8,10 +8,10 @@ function Footer() {
       </div>
       <div>
         <div className='footer_text' >
-          Made by{' '}
+          {/* Made by{' '}
           <a href="https://github.com/dmytrodemianchuk" rel="noreferrer" target={'_blank'}>
             Dmytro Demianchuk
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

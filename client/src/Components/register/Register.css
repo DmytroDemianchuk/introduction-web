@@ -44,7 +44,7 @@
 
 .button_submit {
     font-family: sans-serif;
-    background: linear-gradient(90deg, #2b24f9, #08dcce);
+    /* background: linear-gradient(90deg, #2b24f9, #08dcce); */
     font-size: 11px;
     border: none;
     border-radius: 5px;
