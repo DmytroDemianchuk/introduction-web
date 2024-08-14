@@ -1,0 +1,123 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container Styling */
+.landing-container {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  text-align: center;
+}
+
+/* Signup container parent styling to center on the screen */
+.signup-parent-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Signup container styling */
+.signup-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  text-align: center;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.signup-container h2 {
+  margin-bottom: 16px;
+}
+
+/* Paragraph text */
+.signup-container p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Form styling */
+.signup-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Input fields */
+.signup-container input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Sign-up button */
+.signup-container button {
+  padding: 12px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.signup-container button:hover {
+  background-color: #155ab6;
+}
+
+/* Login link */
+.signup-container .login-link {
+  margin-top: 10px;
+}
+
+.signup-container .login-link a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+/* Divider */
+.signup-container .or-divider {
+  margin: 20px 0;
+  color: #888;
+}
+
+/* Google sign-up button */
+.signup-container .google-signup-btn {
+  padding: 12px;
+  background-color: white;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-container .google-signup-btn:hover {
+  background-color: #f5f5f5;
+}
+
+/* Terms */
+.signup-container .terms {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #888;
+}
+
+.signup-container .terms a {
+  color: #1a73e8;
+  text-decoration: none;
+}

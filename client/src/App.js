@@ -1,30 +1,29 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Header from './Components/header/Header';
-import Landing from './Components/landing/Landing';
+import Header from './Components/header/Header'; // Імпортуй новий Header
+import Landing from './Components/landing/LandingPage'; // Імпортуй компонент LandingPage
 import Login from './Components/login/Login';
-import Chat from './Components/chat/Chat';
-import Register from './Components/register/Register';
+import Register from './Components/register/SignUpForm';
 
 import Footer from './Components/footer/Footer';
 
-import theme from './theme';
 import './App.css';
 
 function App() {
   return (
-
-        <BrowserRouter>
-          <Header></Header>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/chat" element={<Chat />} />
-          </Routes>
-          <Footer></Footer>
-        </BrowserRouter>
+    <BrowserRouter>
+      {/* Використовуй Header для заголовку та меню навігації */}
+      <Header />
+      <Routes>
+        {/* Використовуй Landing як головну сторінку */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      {/* Footer завжди знаходиться внизу сторінки */}
+      <Footer />
+    </BrowserRouter>
   );
 }
 
