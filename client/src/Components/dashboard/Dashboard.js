@@ -118,90 +118,100 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <h1>Welcome to Your Dashboard</h1>
       <p>This is your personal dashboard. From here you can manage your books.</p>
+
+      <div className="dashboard-section">
+        <h2>Create a Book</h2>
+        <form onSubmit={handleCreateBook} className="dashboard-form">
+          <input
+            type="text"
+            placeholder="Title"
+            value={bookTitle}
+            onChange={(e) => setBookTitle(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Author"
+            value={bookAuthor}
+            onChange={(e) => setBookAuthor(e.target.value)}
+            required
+          />
+          <input
+            type="number"
+            placeholder="Published Year"
+            value={bookPublishedYear}
+            onChange={(e) => setBookPublishedYear(e.target.value)}
+            required
+          />
+          <button type="submit">Create Book</button>
+        </form>
+      </div>
+
+      <div className="dashboard-section">
+        <h2>Get Book by ID</h2>
+        <input
+          type="text"
+          placeholder="Book ID"
+          value={bookId}
+          onChange={(e) => setBookId(e.target.value)}
+        />
+        <button onClick={handleGetBookByID}>Get Book</button>
+      </div>
       
-      <h2>Create a Book</h2>
-      <form onSubmit={handleCreateBook}>
+      <div className="dashboard-section">
+        <h2>Update a Book</h2>
+        <form onSubmit={handleUpdateBook} className="dashboard-form">
+          <input
+            type="text"
+            placeholder="Title"
+            value={bookTitle}
+            onChange={(e) => setBookTitle(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Author"
+            value={bookAuthor}
+            onChange={(e) => setBookAuthor(e.target.value)}
+            required
+          />
+          <input
+            type="number"
+            placeholder="Published Year"
+            value={bookPublishedYear}
+            onChange={(e) => setBookPublishedYear(e.target.value)}
+            required
+          />
+          <button type="submit">Update Book</button>
+        </form>
+      </div>
+
+      <div className="dashboard-section">
+        <h2>Delete a Book</h2>
         <input
           type="text"
-          placeholder="Title"
-          value={bookTitle}
-          onChange={(e) => setBookTitle(e.target.value)}
-          required
+          placeholder="Book ID"
+          value={bookId}
+          onChange={(e) => setBookId(e.target.value)}
         />
-        <input
-          type="text"
-          placeholder="Author"
-          value={bookAuthor}
-          onChange={(e) => setBookAuthor(e.target.value)}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Published Year"
-          value={bookPublishedYear}
-          onChange={(e) => setBookPublishedYear(e.target.value)}
-          required
-        />
-        <button type="submit">Create Book</button>
-      </form>
+        <button onClick={handleDeleteBook}>Delete Book</button>
+      </div>
 
-      <h2>Get Book by ID</h2>
-      <input
-        type="text"
-        placeholder="Book ID"
-        value={bookId}
-        onChange={(e) => setBookId(e.target.value)}
-      />
-      <button onClick={handleGetBookByID}>Get Book</button>
-      
-      <h2>Update a Book</h2>
-      <form onSubmit={handleUpdateBook}>
-        <input
-          type="text"
-          placeholder="Title"
-          value={bookTitle}
-          onChange={(e) => setBookTitle(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Author"
-          value={bookAuthor}
-          onChange={(e) => setBookAuthor(e.target.value)}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Published Year"
-          value={bookPublishedYear}
-          onChange={(e) => setBookPublishedYear(e.target.value)}
-          required
-        />
-        <button type="submit">Update Book</button>
-      </form>
+      <div className="dashboard-section">
+        <h2>All Books</h2>
+        <button onClick={() => setShowBooks(!showBooks)}>
+          {showBooks ? 'Hide' : 'Show'} Books
+        </button>
+        {showBooks && (
+          <ul>
+            {books.map(book => (
+              <li key={book.id}>{book.title} by {book.author} ({book.publishedYear})</li>
+            ))}
+          </ul>
+        )}
+      </div>
 
-      <h2>Delete a Book</h2>
-      <input
-        type="text"
-        placeholder="Book ID"
-        value={bookId}
-        onChange={(e) => setBookId(e.target.value)}
-      />
-      <button onClick={handleDeleteBook}>Delete Book</button>
-
-      <h2>All Books</h2>
-      <button onClick={() => setShowBooks(!showBooks)}>
-        {showBooks ? 'Hide' : 'Show'} Books
-      </button>
-      {showBooks && (
-        <ul>
-          {books.map(book => (
-            <li key={book.id}>{book.title} by {book.author} ({book.publishedYear})</li>
-          ))}
-        </ul>
-      )}
-
-      {message && <p>{message}</p>}
+      {message && <p className="dashboard-message">{message}</p>}
     </div>
   );
 };

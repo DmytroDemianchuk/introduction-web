@@ -1,53 +1,92 @@
-/* Dashboard.css */
-.dashboard-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
   
+  /* Container styling */
+  .dashboard-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9; /* Light background */
+  }
+  
+  /* Heading and paragraph styling */
   .dashboard-container h1, .dashboard-container h2 {
     font-size: 24px;
     color: #333;
+    margin-bottom: 15px;
   }
   
   .dashboard-container p {
     font-size: 16px;
     color: #666;
+    margin-bottom: 20px;
   }
   
-  .dashboard-container form {
+  /* Section styling */
+  .dashboard-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-section h2 {
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
+  
+  .dashboard-section form {
     display: flex;
     flex-direction: column;
+    gap: 12px;
   }
   
-  .dashboard-container input {
-    padding: 10px;
-    margin: 10px 0;
+  .dashboard-section input {
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 16px;
   }
   
-  .dashboard-container button {
-    padding: 10px;
+  .dashboard-section button {
+    padding: 12px;
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
   }
   
-  .dashboard-container button:hover {
+  .dashboard-section button:hover {
     background-color: #0056b3;
   }
   
-  .dashboard-container ul {
+  /* Books list styling */
+  .dashboard-section ul {
     list-style-type: none;
     padding: 0;
   }
   
-  .dashboard-container li {
+  .dashboard-section li {
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Message styling */
+  .dashboard-message {
+    color: #d9534f;
+    font-size: 16px;
+    margin-top: 10px;
   }
   

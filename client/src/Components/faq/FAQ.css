@@ -1,0 +1,81 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Main container for FAQ page */
+  .faq-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+    padding: 20px;
+  }
+  
+  /* FAQ header */
+  .faq-container h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* List of FAQ cards */
+  .faq-list {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  /* FAQ card styling */
+  .faq-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Card hover effects */
+  .faq-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* FAQ question styling */
+  .faq-question {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* FAQ answer styling */
+  .faq-answer {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .faq-container h1 {
+      font-size: 28px;
+    }
+    
+    .faq-card {
+      padding: 15px;
+    }
+  
+    .faq-question {
+      font-size: 18px;
+    }
+  
+    .faq-answer {
+      font-size: 14px;
+    }
+  }
+  

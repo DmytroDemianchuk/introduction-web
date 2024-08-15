@@ -1,0 +1,114 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Parent container to center the support content on the page */
+.support-parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f9;
+}
+
+/* Main container for the support content */
+.support-container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px; /* Slightly rounded corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Heading */
+.support-container h1 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Paragraph */
+.support-container p {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Crypto address section */
+.crypto-address {
+  margin-bottom: 30px;
+}
+
+.crypto-address h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.address-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.crypto-address .address {
+  background-color: #f9f9f9; /* Lighter background for contrast */
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Rounded corners for address box */
+  padding: 20px;
+  font-family: monospace;
+  overflow-x: auto;
+  word-break: break-word; /* Break long words */
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Copy button */
+.copy-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.copy-button:hover {
+  background-color: #0056b3;
+}
+
+/* Link styling */
+.support-container a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.support-container a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Success message */
+.support-container .message {
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.support-container .message.success {
+  color: #2ecc71;
+}

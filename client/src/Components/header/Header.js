@@ -9,10 +9,9 @@ const Header = () => {
           <a href="/">Introduction to web</a>
         </div>
         <ul className="header-nav-links"> {/* Unique class for navigation links */}
-          <li><a href="#features">Features</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#support">Support</a></li>
+          <li><a href="/Dashboard">Dashboard</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/support">Support</a></li>
         </ul>
 
         <div className='btn'> {/* Container for buttons */}
@@ -20,7 +19,7 @@ const Header = () => {
             <a href="/login">Log In</a>
           </div>
           <div className="header-download-btn">
-            <a href="/register">Sign Up</a>
+            <a href="/signup">Sign Up</a>
           </div>
         </div>
       </nav>

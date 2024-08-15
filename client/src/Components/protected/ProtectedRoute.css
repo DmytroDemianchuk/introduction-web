@@ -1,0 +1,104 @@
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Darker overlay for better focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease; /* Fade-in animation for the overlay */
+  }
+  
+  /* Modal container */
+  .modal {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 450px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Enhanced shadow for better depth */
+    animation: slideDown 0.4s ease; /* Slide down animation for entrance */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  /* Slide down animation */
+  @keyframes slideDown {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Fade in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Modal title */
+  .modal h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+  
+  /* Modal text */
+  .modal p {
+    margin-bottom: 30px;
+    color: #666;
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  /* Modal button */
+  .modal button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .modal button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slight zoom effect on hover */
+  }
+  
+  .modal button:active {
+    background-color: #004494;
+    transform: scale(1); /* Reset scale on click */
+  }
+  
+  /* Optional: Modal link (if needed) */
+  .modal a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .modal a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
