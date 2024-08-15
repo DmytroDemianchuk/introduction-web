@@ -3,11 +3,13 @@ import './LandingPage.css';
 
 const LandingPage = () => {
   return (
-    <header>
-      <h1>Turn any text field on your Mac into a ChatGPT-4.0 channel</h1>
-      <p>Just send requests and get answers directly in any text fields on your Mac.</p>
-      <a href="/register" className="cta-button">Download on the Mac App Store</a>
-    </header>
+    <div className="landing-parent-container">
+      <div className="landing-container">
+        <h1>Register Your Account</h1>
+        <p>Quick and easy registration to get started. Follow the simple steps to create your account and gain access to all features.</p>
+        <a href="/register" className="landing-cta-button">Sign Up</a>
+      </div>
+    </div>
   );
 };
 

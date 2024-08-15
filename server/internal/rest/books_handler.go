@@ -3,6 +3,7 @@ package rest
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/dmytrodemianchuk/go-auth-mongo/internal/domain"
 	"github.com/dmytrodemianchuk/go-auth-mongo/internal/service"
@@ -16,33 +17,34 @@ func NewBooksHandler(service *service.Books) *BooksHandler {
 	return &BooksHandler{service: service}
 }
 
-func (h *BooksHandler) CreateBook(w http.ResponseWriter, r *http.Request) {
+func (h *BooksHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var book domain.Book
 	if err := json.NewDecoder(r.Body).Decode(&book); err != nil {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.service.Create(r.Context(), book); err != nil {
+	err := h.service.Create(r.Context(), book)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 }
 
-func (h *BooksHandler) GetBookByID(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Path[len("/books/"):]
+func (h *BooksHandler) GetByID(w http.ResponseWriter, r *http.Request) {
+	id := strings.TrimPrefix(r.URL.Path, "/books/")
 	book, err := h.service.GetByID(r.Context(), id)
 	if err != nil {
-		http.Error(w, "Not Found", http.StatusNotFound)
+		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
 	json.NewEncoder(w).Encode(book)
 }
 
-func (h *BooksHandler) GetAllBooks(w http.ResponseWriter, r *http.Request) {
+func (h *BooksHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	books, err := h.service.GetAll(r.Context())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -52,28 +54,30 @@ func (h *BooksHandler) GetAllBooks(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(books)
 }
 
-func (h *BooksHandler) UpdateBook(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Path[len("/books/"):]
+func (h *BooksHandler) Delete(w http.ResponseWriter, r *http.Request) {
+	id := strings.TrimPrefix(r.URL.Path, "/books/")
+	err := h.service.Delete(r.Context(), id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func (h *BooksHandler) Update(w http.ResponseWriter, r *http.Request) {
+	id := strings.TrimPrefix(r.URL.Path, "/books/")
 	var book domain.Book
 	if err := json.NewDecoder(r.Body).Decode(&book); err != nil {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.service.Update(r.Context(), id, book); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	err := h.service.Update(r.Context(), id, book)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
-}
-
-func (h *BooksHandler) DeleteBook(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Path[len("/books/"):]
-	if err := h.service.Delete(r.Context(), id); err != nil {
-		http.Error(w, "Not Found", http.StatusNotFound)
-		return
-	}
-
-	w.WriteHeader(http.StatusNoContent)
+	w.WriteHeader(http.StatusOK)
 }

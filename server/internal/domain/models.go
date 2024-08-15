@@ -1,6 +1,8 @@
 package domain
 
-import "time"
+import (
+	"time"
+)
 
 // Book represents the structure of a book in the system.
 type Book struct {
@@ -31,3 +33,6 @@ type User struct {
 	Password     string    `bson:"password"`
 	RegisteredAt time.Time `bson:"registered_at"`
 }
+
+// Error constants
+// var ErrUserNotFound = errors.New("user not found")

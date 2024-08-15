@@ -1,30 +1,23 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Header from './Components/header/Header';
+import Dashboard from './Components/dashboard/Dashboard';
+import Login from './Components/login/LoginForm';
+import SignUpForm from './Components/register/SignUpForm'; // Ensure this path is correct
+import LandingPage from './Components/landing/LandingPage';
 
-import Header from './Components/header/Header'; // Імпортуй новий Header
-import Landing from './Components/landing/LandingPage'; // Імпортуй компонент LandingPage
-import Login from './Components/login/Login';
-import Register from './Components/register/SignUpForm';
-
-import Footer from './Components/footer/Footer';
-
-import './App.css';
-
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
-      {/* Використовуй Header для заголовку та меню навігації */}
+    <Router>
       <Header />
       <Routes>
-        {/* Використовуй Landing як головну сторінку */}
-        <Route path="/" element={<Landing />} />
-        <Route path="/register" element={<Register />} />
+      <Route path="/" element={<LandingPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<SignUpForm />} /> {/* Updated to /register */}
       </Routes>
-      {/* Footer завжди знаходиться внизу сторінки */}
-      <Footer />
-    </BrowserRouter>
+    </Router>
   );
-}
+};
 
 export default App;

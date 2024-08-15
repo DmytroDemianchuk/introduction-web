@@ -17,32 +17,33 @@ func NewUsersHandler(service *service.Users) *UsersHandler {
 }
 
 func (h *UsersHandler) SignUp(w http.ResponseWriter, r *http.Request) {
-	var input domain.SignUpInput
-	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+	var inp domain.SignUpInput
+	if err := json.NewDecoder(r.Body).Decode(&inp); err != nil {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
 
-	if err := h.service.SignUp(r.Context(), input); err != nil {
+	err := h.service.SignUp(r.Context(), inp)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 }
 
 func (h *UsersHandler) SignIn(w http.ResponseWriter, r *http.Request) {
-	var input domain.SignInInput
-	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+	var inp domain.SignInInput
+	if err := json.NewDecoder(r.Body).Decode(&inp); err != nil {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
 
-	token, err := h.service.SignIn(r.Context(), input)
+	token, err := h.service.SignIn(r.Context(), inp)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
-	w.Write([]byte(token))
+	json.NewEncoder(w).Encode(map[string]string{"token": token})
 }

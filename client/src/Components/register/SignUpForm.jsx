@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './SignUpForm.css';
 
 const SignUpForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
+
+    const requestBody = { name, email, password };
+
+    try {
+      const response = await axios.post('http://localhost:8080/signup', requestBody);
+
+      setMessage('Signup successful!');
+      setIsError(false);
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message);
+      setMessage(error.response ? error.response.data.message : 'Something went wrong');
+      setIsError(true);
+    }
   };
 
   return (
@@ -43,6 +55,9 @@ const SignUpForm = () => {
           />
           <button type="submit">Sign Up</button>
         </form>
+        {message && (
+          <p className={isError ? 'error-message' : 'success-message'}>{message}</p>
+        )}
         <p className="login-link">
           Already have an account? <a href="/login">Log In</a>
         </p>

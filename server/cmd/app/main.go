@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -25,8 +24,6 @@ func init() {
 func main() {
 	jwtSecret := os.Getenv("JWT_SECRET")
 
-	fmt.Println("JWT Secret:", jwtSecret)
-
 	// Establish a MongoDB connection
 	db, err := database.NewMongoDBConnection()
 	if err != nil {
@@ -38,7 +35,7 @@ func main() {
 	usersRepo := repository.NewUsersRepository(db)
 
 	// Initialize password hasher
-	passwordHasher := hash.NewHasher() // Assuming you have a simple hasher implementation
+	passwordHasher := hash.NewHasher()
 
 	// Initialize services
 	booksService := service.NewBooks(booksRepo)
@@ -54,7 +51,7 @@ func main() {
 		Handler: mux,
 	}
 
-	fmt.Println("Server is running on port 8080...")
+	log.Println("Server is running on port 8080...")
 	if err := server.ListenAndServe(); err != nil {
 		log.Fatal("Server failed:", err)
 	}

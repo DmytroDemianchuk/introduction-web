@@ -3,33 +3,42 @@ package repository
 import (
 	"context"
 
+	"github.com/dmytrodemianchuk/go-auth-mongo/internal/domain"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-
-	"github.com/dmytrodemianchuk/go-auth-mongo/internal/domain"
 )
 
-type BooksRepository struct {
-	db *mongo.Database
+type BooksRepository interface {
+	Create(ctx context.Context, book domain.Book) error
+	GetByID(ctx context.Context, id string) (domain.Book, error)
+	GetAll(ctx context.Context) ([]domain.Book, error)
+	Update(ctx context.Context, id string, book domain.Book) error
+	Delete(ctx context.Context, id string) error
 }
 
-func NewBooksRepository(db *mongo.Database) *BooksRepository {
-	return &BooksRepository{db: db}
+type mongoBooksRepository struct {
+	collection *mongo.Collection
 }
 
-func (r *BooksRepository) Create(ctx context.Context, book domain.Book) error {
-	_, err := r.db.Collection("books").InsertOne(ctx, book)
+func NewBooksRepository(db *mongo.Database) BooksRepository {
+	return &mongoBooksRepository{
+		collection: db.Collection("books"),
+	}
+}
+
+func (r *mongoBooksRepository) Create(ctx context.Context, book domain.Book) error {
+	_, err := r.collection.InsertOne(ctx, book)
 	return err
 }
 
-func (r *BooksRepository) GetByID(ctx context.Context, id string) (domain.Book, error) {
+func (r *mongoBooksRepository) GetByID(ctx context.Context, id string) (domain.Book, error) {
 	var book domain.Book
-	err := r.db.Collection("books").FindOne(ctx, bson.M{"_id": id}).Decode(&book)
+	err := r.collection.FindOne(ctx, bson.M{"_id": id}).Decode(&book)
 	return book, err
 }
 
-func (r *BooksRepository) GetAll(ctx context.Context) ([]domain.Book, error) {
-	cursor, err := r.db.Collection("books").Find(ctx, bson.M{})
+func (r *mongoBooksRepository) GetAll(ctx context.Context) ([]domain.Book, error) {
+	cursor, err := r.collection.Find(ctx, bson.M{})
 	if err != nil {
 		return nil, err
 	}
@@ -44,15 +53,19 @@ func (r *BooksRepository) GetAll(ctx context.Context) ([]domain.Book, error) {
 		books = append(books, book)
 	}
 
+	if err := cursor.Err(); err != nil {
+		return nil, err
+	}
+
 	return books, nil
 }
 
-func (r *BooksRepository) Delete(ctx context.Context, id string) error {
-	_, err := r.db.Collection("books").DeleteOne(ctx, bson.M{"_id": id})
+func (r *mongoBooksRepository) Update(ctx context.Context, id string, book domain.Book) error {
+	_, err := r.collection.UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": book})
 	return err
 }
 
-func (r *BooksRepository) Update(ctx context.Context, id string, inp domain.Book) error {
-	_, err := r.db.Collection("books").UpdateOne(ctx, bson.M{"_id": id}, bson.M{"$set": inp})
+func (r *mongoBooksRepository) Delete(ctx context.Context, id string) error {
+	_, err := r.collection.DeleteOne(ctx, bson.M{"_id": id})
 	return err
 }

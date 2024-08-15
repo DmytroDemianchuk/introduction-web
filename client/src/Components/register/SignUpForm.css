@@ -1,19 +1,10 @@
 /* Basic reset */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
-/* Container Styling */
-.landing-container {
-  font-family: 'Arial', sans-serif;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  text-align: center;
-}
 
 /* Signup container parent styling to center on the screen */
 .signup-parent-container {

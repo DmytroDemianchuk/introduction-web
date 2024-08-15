@@ -1,28 +1,30 @@
 import React from 'react';
-import '../landing/LandingPage.css'; // Шлях до CSS файлу
-import LandingPage from '../landing/LandingPage'; // Шлях до компонента LandingPage
+import './Header.css'; // Importing CSS for Header
 
 const Header = () => {
   return (
-    <div>
-      {/* Navbar */}
-      <nav>
-        <div className="logo">
-          <a href="/">YourLogo</a>
+    <header className="header-container"> {/* Unique class for Header */}
+      <nav className="header-nav"> {/* Unique class for navigation */}
+        <div className="header-logo">
+          <a href="/">Introduction to web</a>
         </div>
-        <ul className="nav-links">
+        <ul className="header-nav-links"> {/* Unique class for navigation links */}
           <li><a href="#features">Features</a></li>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#support">Support</a></li>
         </ul>
-        <div className="download-btn">
-          <a href="/register">Download</a>
+
+        <div className='btn'> {/* Container for buttons */}
+          <div className="header-signin-btn">
+            <a href="/login">Log In</a>
+          </div>
+          <div className="header-download-btn">
+            <a href="/register">Sign Up</a>
+          </div>
         </div>
       </nav>
-      
-      {/* Landing Page Section */}
-    </div>
+    </header>
   );
 };
 
