@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/dmytrodemianchuk/go-auth-mongo/internal/service"
-	"github.com/gorilla/handlers"
 )
 
 type Handler struct {
@@ -39,11 +38,7 @@ func (h *Handler) InitRouter() http.Handler {
 	mux.HandleFunc("/books/delete", authMiddleware.Middleware(h.methodHandler(h.booksHandler.Delete, http.MethodDelete)))
 
 	// Apply CORS middleware
-	return handlers.CORS(
-		handlers.AllowedOrigins([]string{"http://localhost:3000"}),
-		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
-		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
-	)(mux)
+	return CORS(mux) // Apply the custom CORS middleware
 }
 
 // methodHandler is a helper function to restrict handler to a specific HTTP method.

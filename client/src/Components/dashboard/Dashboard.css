@@ -1,92 +1,232 @@
-/* Basic reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Container styling */
-  .dashboard-container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9; /* Light background */
-  }
-  
-  /* Heading and paragraph styling */
-  .dashboard-container h1, .dashboard-container h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 15px;
-  }
-  
-  .dashboard-container p {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  /* Section styling */
-  .dashboard-section {
-    margin-bottom: 30px;
-    padding: 20px;
-    border-radius: 8px;
+/* Parent container to center the dashboard on the page */
+.dashboard-container {
     background-color: #ffffff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* Зменшити відступи для кращого заповнення екрану */
+    border-radius: 8px; /* Меньше закруглені кути для сучасного вигляду */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
+    width: 100vw; /* Ширина на весь екран */
+    height: 100vh; /* Висота на весь екран */
+    overflow: auto; /* Прокрутка вмісту, якщо він перевищує висоту контейнера */
+    box-sizing: border-box; /* Включити падінг та бордер у загальну ширину та висоту */
+    text-align: center; /* Центрування тексту */
+    margin: 0; /* Видалити стандартні відступи */
   }
   
-  .dashboard-section h2 {
-    margin-bottom: 15px;
-    font-size: 22px;
+  /* Вирівнювання та центроване розміщення дашборду */
+  .dashboard-parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Мінімальна висота на весь екран */
+    background-color: #f0f0f0; /* Фоновий колір для батьківського контейнера */
+    margin: 0; /* Прибрати відступи по краях */
+    padding: 0; /* Прибрати відступи всередині */
   }
   
-  .dashboard-section form {
+  /* Section titles */
+  .dashboard-container h1 {
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 36px; /* Збільшений розмір заголовка */
+  }
+  
+  .dashboard-container h2 {
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 30px; /* Збільшений розмір підзаголовка */
+  }
+  
+  /* Section description */
+  .dashboard-container p {
+    margin-bottom: 40px;
+    color: #666; /* Темніший сірий колір */
+    font-size: 18px; /* Збільшений розмір шрифту */
+  }
+  
+  /* Input fields */
+  .dashboard-container input[type="text"],
+  .dashboard-container input[type="email"],
+  .dashboard-container input[type="password"],
+  .dashboard-container input[type="number"] {
+    width: 100%;
+    padding: 14px; /* Більше відступів всередині полів */
+    margin-bottom: 20px; /* Збільшений відступ між полями */
+    border: 1px solid #ddd; /* Легкий сірий колір */
+    border-radius: 6px; /* Більше закруглені кути */
+    font-size: 18px; /* Збільшений розмір шрифту */
+    color: #333; /* Темніший текст */
+  }
+  
+  /* Buttons */
+  .dashboard-container button {
+    width: 100%;
+    padding: 14px; /* Більше відступів всередині кнопок */
+    background-color: #007bff; /* М'якший синій колір */
+    color: #fff;
+    border: none;
+    border-radius: 6px; /* Більше закруглені кути */
+    font-size: 18px; /* Збільшений розмір шрифту */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-container button:hover {
+    background-color: #0056b3; /* Трохи темніший синій */
+  }
+  
+  .dashboard-container button:active {
+    background-color: #004494; /* Ще темніший синій */
+  }
+  
+  /* Error or success messages */
+  .dashboard-container .error-message,
+  .dashboard-container .success-message {
+    margin-top: 20px;
+    font-size: 16px; /* Збільшений розмір шрифту */
+  }
+  
+  .dashboard-container .error-message {
+    color: #e74c3c; /* Оранжево-червоний для помилок */
+  }
+  
+  .dashboard-container .success-message {
+    color: #2ecc71; /* Зелений для успіху */
+  }
+  
+  /* Links */
+  .dashboard-container .login-link,
+  .dashboard-container .terms a {
+    font-size: 16px; /* Збільшений розмір шрифту */
+    color: #007bff; /* М'якший синій колір */
+    text-decoration: none;
+  }
+  
+  .dashboard-container .login-link:hover,
+  .dashboard-container .terms a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Divider for alternative actions */
+  .dashboard-container .or-divider {
+    margin: 25px 0;
+    position: relative;
+    color: #aaa;
+  }
+  
+  .dashboard-container .or-divider::before,
+  .dashboard-container .or-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%; /* Ширша лінія */
+    height: 1px;
+    background-color: #ddd; /* Легкий сірий колір */
+  }
+  
+  .dashboard-container .or-divider::before {
+    left: 0;
+  }
+  
+  .dashboard-container .or-divider::after {
+    right: 0;
+  }
+  
+  /* Option cards */
+  .options-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px; /* Збільшений відступ між картками */
+  }
+  
+  .option-card {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #ddd; /* Легкий сірий колір */
+    border-radius: 8px;
+    padding: 15px; /* Більше відступів всередині карток */
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Більш розмитий фон */
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
   }
   
-  .dashboard-section input {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
+  .option-card img {
+    width: 70px; /* Збільшене зображення */
+    height: 70px;
+  }
+  
+  .option-card h2 {
+    margin-top: 15px;
+    font-size: 20px; /* Збільшений розмір тексту */
+    color: #333;
+  }
+  
+  .option-card:hover {
+    background-color: #f9f9f9; /* М'якший фоновий колір при наведенні */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Більш виражена тінь */
+  }
+  
+  /* Additional styling for section containers */
+  .dashboard-section {
+    margin-bottom: 40px; /* Збільшений відступ між секціями */
+    padding: 30px; /* Більше відступів всередині секцій */
+    border-radius: 10px; /* Більше закруглені кути */
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Більш розмитий фон */
+  }
+  
+  .dashboard-section h3 {
+    margin-bottom: 20px;
+    font-size: 24px; /* Збільшений розмір заголовка секції */
+    color: #333;
+  }
+  
+  .dashboard-section p {
+    font-size: 18px; /* Збільшений розмір тексту */
+    color: #555; /* Світліший сірий колір */
   }
   
   .dashboard-section button {
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
+    margin-top: 15px; /* Збільшений відступ між кнопкою та текстом */
+    background-color: #e74c3c; /* Оранжево-червоний колір для кнопок */
+    color: #fff;
     border: none;
     border-radius: 6px;
+    padding: 10px 20px; /* Більше відступів всередині кнопки */
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
     transition: background-color 0.3s ease;
   }
   
   .dashboard-section button:hover {
-    background-color: #0056b3;
+    background-color: #c0392b; /* Темніший червоний колір */
   }
   
-  /* Books list styling */
+  /* Book list styling */
   .dashboard-section ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    margin: 0;
   }
   
   .dashboard-section li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 16px;
+    margin-bottom: 15px;
+    font-size: 18px; /* Збільшений розмір тексту */
     color: #333;
   }
   
-  /* Message styling */
-  .dashboard-message {
-    color: #d9534f;
-    font-size: 16px;
-    margin-top: 10px;
+  .dashboard-section button {
+    background-color: #e74c3c; /* Оранжево-червоний колір для кнопок видалення */
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dashboard-section button:hover {
+    background-color: #c0392b; /* Темніший червоний колір */
   }
   
