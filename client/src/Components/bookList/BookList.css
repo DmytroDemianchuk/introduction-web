@@ -1,0 +1,67 @@
+.book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .book-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .book-list-item input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .book-list-item .edit-btn {
+    background: #0071e3;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .book-list-item .edit-btn:hover {
+    background: #005bb5;
+  }
+  
+  .delete-btn {
+    margin-top: 10px;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .delete-btn:hover {
+    background: #c0392b;
+  }
+  
+  .view-more-btn {
+    margin-top: 10px;
+    background: #0071e3;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .view-more-btn:hover {
+    background: #005bb5;
+  }
+  

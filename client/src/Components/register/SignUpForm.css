@@ -1,13 +1,13 @@
-/* Parent container to center the form on the page */
+/* src/Components/register/SignUpForm.css */
 .signup-parent-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px); /* Adjust based on footer height */
   background-color: #f4f4f9;
+  padding-bottom: 80px; /* Space for footer */
 }
 
-/* Main container for the signup form */
 .signup-container {
   background-color: #ffffff;
   padding: 40px;
@@ -18,20 +18,17 @@
   text-align: center;
 }
 
-/* Form title */
 .signup-container h2 {
   margin-bottom: 20px;
   color: #333;
   font-size: 24px;
 }
 
-/* Form description */
 .signup-container p {
   margin-bottom: 30px;
   color: #777;
 }
 
-/* Input fields */
 .signup-container input[type="text"],
 .signup-container input[type="email"],
 .signup-container input[type="password"] {
@@ -44,7 +41,6 @@
   color: #333;
 }
 
-/* Submit button */
 .signup-container button[type="submit"] {
   width: 100%;
   padding: 12px;
@@ -61,7 +57,6 @@
   background-color: #0056b3;
 }
 
-/* Error or success messages */
 .signup-container .error-message,
 .signup-container .success-message {
   margin-top: 15px;
@@ -76,7 +71,6 @@
   color: #2ecc71;
 }
 
-/* Login link */
 .signup-container .login-link {
   margin-top: 20px;
   font-size: 14px;
@@ -92,7 +86,6 @@
   text-decoration: underline;
 }
 
-/* Divider for the alternative signup methods */
 .signup-container .or-divider {
   margin: 20px 0;
   position: relative;
@@ -117,7 +110,6 @@
   right: 0;
 }
 
-/* Google signup button */
 .signup-container .google-signup-btn {
   width: 100%;
   padding: 12px;
@@ -135,7 +127,6 @@
   background-color: #c33d31;
 }
 
-/* Terms and conditions text */
 .signup-container .terms {
   margin-top: 20px;
   font-size: 12px;

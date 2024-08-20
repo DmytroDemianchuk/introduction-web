@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import './Dashboard.css';
-import createIcon from '../../icons/create.png';
-import deleteIcon from '../../icons/delete.png';
-import viewIcon from '../../icons/view.png';
-import editIcon from '../../icons/update.png';
+import BookForm from '../bookForm/BookForm';
+import BookList from '../bookList/BookList';
 
 const Dashboard = () => {
   const [books, setBooks] = useState([]);
@@ -13,16 +11,15 @@ const Dashboard = () => {
   const [bookAuthor, setBookAuthor] = useState('');
   const [bookPublishedYear, setBookPublishedYear] = useState('');
   const [message, setMessage] = useState('');
-  const [showBooks, setShowBooks] = useState(false);
-  const [selectedAction, setSelectedAction] = useState(null);
+  const [selectedAction, setSelectedAction] = useState('create');
+  const [showAllBooks, setShowAllBooks] = useState(false);
 
   const token = Cookies.get('token');
+  const booksPerPage = 5;
 
   useEffect(() => {
-    if (showBooks) {
-      fetchBooks();
-    }
-  }, [showBooks]);
+    fetchBooks();
+  }, []);
 
   const fetchBooks = async () => {
     try {
@@ -32,54 +29,28 @@ const Dashboard = () => {
           'Pragma': 'no-cache',
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const data = await response.json();
       setBooks(data);
-      console.log('Books fetched:', data); // Log books data
     } catch (error) {
-      console.error('Error fetching books:', error); // Log error
       setMessage('Failed to fetch books');
     }
   };
-  
 
-  const handleCreateBook = async (e) => {
+  const handleCreateOrUpdateBook = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:8080/books/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          title: bookTitle,
-          author: bookAuthor,
-          publishedYear: bookPublishedYear,
-        }),
-      });
-      const data = await response.json();
-      console.log('Create response:', data); // Логування відповіді
-      if (response.ok) {
-        setMessage('Book created successfully');
-        fetchBooks();
-      } else {
-        setMessage('Failed to create book');
-      }
-    } catch (error) {
-      setMessage('Error creating book');
-    }
-  };
+    const url = selectedAction === 'create'
+      ? 'http://localhost:8080/books/create'
+      : 'http://localhost:8080/books/update';
+    const method = selectedAction === 'create' ? 'POST' : 'PUT';
 
-  const handleUpdateBook = async (e) => {
-    e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/books/update', {
-        method: 'PUT',
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -91,45 +62,39 @@ const Dashboard = () => {
           publishedYear: bookPublishedYear,
         }),
       });
-      const data = await response.json();
-      console.log('Update response:', data); // Логування відповіді
+
       if (response.ok) {
-        setMessage('Book updated successfully');
-        fetchBooks();
+        setMessage(selectedAction === 'create' ? 'Book created successfully' : 'Book updated successfully');
+        fetchBooks(); // Оновлюємо список книг після успішного редагування або створення
+        resetForm(); // Скидаємо форму
       } else {
-        setMessage('Failed to update book');
+        setMessage('Failed to save book');
       }
     } catch (error) {
-      setMessage('Error updating book');
+      setMessage('Error saving book');
     }
   };
 
-  const handleDeleteBook = async (id) => {
+  const handleDeleteSelectedBooks = async (selectedBookIds) => {
     try {
-      const response = await fetch(`http://localhost:8080/books/delete?id=${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
-        },
-      });
-
-      if (response.ok) {
-        console.log('Delete response:', await response.text()); // Логування відповіді
-        setMessage('Book deleted successfully');
-        // Видалення книги з локального стану
-        setBooks(prevBooks => prevBooks.filter(book => book.id !== id));
-      } else {
-        setMessage('Failed to delete book');
-      }
+      await Promise.all(
+        selectedBookIds.map((id) =>
+          fetch(`http://localhost:8080/books/delete?id=${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          })
+        )
+      );
+      setMessage('Selected books deleted successfully');
+      setBooks(books.filter((book) => !selectedBookIds.includes(book.id))); // Видаляємо зі списку
     } catch (error) {
-      console.error('Error deleting book:', error); // Логування помилки
-      setMessage('Error deleting book');
+      setMessage('Error deleting selected books');
     }
   };
 
-  const handleEditClick = (book) => {
+  const handleEditBook = (book) => {
     setBookId(book.id);
     setBookTitle(book.title);
     setBookAuthor(book.author);
@@ -137,152 +102,62 @@ const Dashboard = () => {
     setSelectedAction('update');
   };
 
-  const renderAction = () => {
-    switch (selectedAction) {
-      case 'create':
-        return (
-          <div className="dashboard-section">
-            <h2>Create a Book</h2>
-            <form onSubmit={handleCreateBook} className="dashboard-form">
-              <input
-                type="text"
-                placeholder="Title"
-                value={bookTitle}
-                onChange={(e) => setBookTitle(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Author"
-                value={bookAuthor}
-                onChange={(e) => setBookAuthor(e.target.value)}
-                required
-              />
-              <input
-                type="number"
-                placeholder="Published Year"
-                value={bookPublishedYear}
-                onChange={(e) => setBookPublishedYear(e.target.value)}
-                required
-              />
-              <button type="submit">Create Book</button>
-            </form>
-          </div>
-        );
-      case 'update':
-        return (
-          <div className="dashboard-section">
-            <h2>Update a Book</h2>
-            <form onSubmit={handleUpdateBook} className="dashboard-form">
-              <input
-                type="text"
-                placeholder="Book ID"
-                value={bookId}
-                onChange={(e) => setBookId(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Title"
-                value={bookTitle}
-                onChange={(e) => setBookTitle(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Author"
-                value={bookAuthor}
-                onChange={(e) => setBookAuthor(e.target.value)}
-                required
-              />
-              <input
-                type="number"
-                placeholder="Published Year"
-                value={bookPublishedYear}
-                onChange={(e) => setBookPublishedYear(e.target.value)}
-                required
-              />
-              <button type="submit">Update Book</button>
-            </form>
-          </div>
-        );
-      case 'delete':
-        return (
-          <div className="dashboard-section">
-            <h2>Delete a Book</h2>
-            <input
-              type="text"
-              placeholder="Book ID"
-              value={bookId}
-              onChange={(e) => setBookId(e.target.value)}
-            />
-            <button onClick={() => handleDeleteBook(bookId)}>Delete Book</button>
-          </div>
-        );
-      case 'view':
-        return (
-          <div className="dashboard-section">
-            <h2>All Books</h2>
-            <button onClick={() => setShowBooks(!showBooks)}>
-              {showBooks ? 'Hide' : 'Show'} Books
-            </button>
-            {showBooks && (
-              <ul>
-                {books.map(book => (
-                  <li key={book.id}>
-                    {book.title} by {book.author} ({book.publishedYear})
-                    <button 
-                      onClick={() => handleEditClick(book)} 
-                      style={{ marginLeft: '10px', cursor: 'pointer', color: 'blue' }}
-                    >
-                      <img src={editIcon} alt="Edit" style={{ width: '20px', height: '20px' }} />
-                    </button>
-                    <button 
-                      onClick={() => handleDeleteBook(book.id)} 
-                      style={{ marginLeft: '10px', cursor: 'pointer', color: 'red' }}
-                    >
-                      ❌
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        );
-      default:
-        return <p>Please select an action above to continue.</p>;
-    }
+  const resetForm = () => {
+    setBookId('');
+    setBookTitle('');
+    setBookAuthor('');
+    setBookPublishedYear('');
+    setSelectedAction('create');
   };
 
+  const toggleShowAllBooks = () => {
+    setShowAllBooks(!showAllBooks);
+  };
+
+  const displayedBooks = showAllBooks ? books : books.slice(0, booksPerPage);
+
   return (
-    <div className="dashboard-container">
-      <h1>Welcome to Your Dashboard</h1>
-      <p>This is your personal dashboard. From here you can manage your books.</p>
+    <div className="dashboard">
+      <h1>Dashboard</h1>
 
-      <div className="options-container">
-        <div className="option-card" onClick={() => setSelectedAction('create')}>
-          <img src={createIcon} alt="Create" />
-          <h2>Create</h2>
-        </div>
-        <div className="option-card" onClick={() => setSelectedAction('update')}>
-          <img src={editIcon} alt="Update" />
-          <h2>Update</h2>
-        </div>
-        <div className="option-card" onClick={() => setSelectedAction('delete')}>
-          <img src={deleteIcon} alt="Delete" />
-          <h2>Delete</h2>
-        </div>
-        <div className="option-card" onClick={() => setSelectedAction('view')}>
-          <img src={viewIcon} alt="View All" />
-          <h2>View All</h2>
-        </div>
+      <div className="actions-container">
+        <button className="action-btn" onClick={() => setSelectedAction('create')}>
+          Create Book
+        </button>
+        <button className="action-btn" onClick={() => setSelectedAction('view')}>
+          View Books
+        </button>
       </div>
 
-      <div className="action-container">
-        {renderAction()}
-      </div>
+      {(selectedAction === 'create' || selectedAction === 'update') && (
+        <BookForm
+          onSubmit={handleCreateOrUpdateBook}
+          bookId={bookId}
+          setBookId={setBookId}
+          bookTitle={bookTitle}
+          setBookTitle={setBookTitle}
+          bookAuthor={bookAuthor}
+          setBookAuthor={setBookAuthor}
+          bookPublishedYear={bookPublishedYear}
+          setBookPublishedYear={setBookPublishedYear}
+          action={selectedAction}
+        />
+      )}
 
-      {message && <p>{message}</p>}
+      {selectedAction === 'view' && (
+        <div>
+          <BookList
+            books={displayedBooks}
+            onDeleteSelected={handleDeleteSelectedBooks}
+            onEditBook={handleEditBook}
+          />
+          <button onClick={toggleShowAllBooks} className="view-more-btn">
+            {showAllBooks ? 'Show Less' : 'Show All'}
+          </button>
+        </div>
+      )}
+
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };

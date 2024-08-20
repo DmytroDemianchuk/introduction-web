@@ -1,21 +1,13 @@
+// src/Components/footer/Footer.js
 import React from 'react';
-import "./footer.css"
+import './Footer.css';
 
-function Footer() {
+const Footer = () => {
   return (
-    <div className='footer'>
-      <div>
-      </div>
-      <div>
-        <div className='footer_text' >
-          {/* Made by{' '}
-          <a href="https://github.com/dmytrodemianchuk" rel="noreferrer" target={'_blank'}>
-            Dmytro Demianchuk
-          </a> */}
-        </div>
-      </div>
-    </div>
+    <footer className="footer">
+      <p>&copy; {new Date().getFullYear()} Your Company. All rights reserved.</p>
+    </footer>
   );
-}
+};
 
 export default Footer;

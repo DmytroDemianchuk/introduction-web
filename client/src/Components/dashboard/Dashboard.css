@@ -1,232 +1,134 @@
-/* Parent container to center the dashboard on the page */
-.dashboard-container {
-    background-color: #ffffff;
-    padding: 20px; /* Зменшити відступи для кращого заповнення екрану */
-    border-radius: 8px; /* Меньше закруглені кути для сучасного вигляду */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легка тінь */
-    width: 100vw; /* Ширина на весь екран */
-    height: 100vh; /* Висота на весь екран */
-    overflow: auto; /* Прокрутка вмісту, якщо він перевищує висоту контейнера */
-    box-sizing: border-box; /* Включити падінг та бордер у загальну ширину та висоту */
-    text-align: center; /* Центрування тексту */
-    margin: 0; /* Видалити стандартні відступи */
+/* Загальні стилі */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
   
-  /* Вирівнювання та центроване розміщення дашборду */
-  .dashboard-parent-container {
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    background-color: #f5f5f7;
+  }
+  
+  /* Основний контейнер для Dashboard */
+  .dashboard {
+    max-width: 800px;
+    margin: 60px auto; /* Додано margin-top для відступу з верхньої частини */
+    padding: 20px;
+  }
+  
+  /* Заголовок на Dashboard */
+  .dashboard h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #1d1d1f;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  /* Контейнер для дій */
+  .actions-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* Мінімальна висота на весь екран */
-    background-color: #f0f0f0; /* Фоновий колір для батьківського контейнера */
-    margin: 0; /* Прибрати відступи по краях */
-    padding: 0; /* Прибрати відступи всередині */
-  }
-  
-  /* Section titles */
-  .dashboard-container h1 {
     margin-bottom: 30px;
-    color: #333;
-    font-size: 36px; /* Збільшений розмір заголовка */
   }
   
-  .dashboard-container h2 {
-    margin-bottom: 25px;
-    color: #333;
-    font-size: 30px; /* Збільшений розмір підзаголовка */
-  }
-  
-  /* Section description */
-  .dashboard-container p {
-    margin-bottom: 40px;
-    color: #666; /* Темніший сірий колір */
-    font-size: 18px; /* Збільшений розмір шрифту */
-  }
-  
-  /* Input fields */
-  .dashboard-container input[type="text"],
-  .dashboard-container input[type="email"],
-  .dashboard-container input[type="password"],
-  .dashboard-container input[type="number"] {
-    width: 100%;
-    padding: 14px; /* Більше відступів всередині полів */
-    margin-bottom: 20px; /* Збільшений відступ між полями */
-    border: 1px solid #ddd; /* Легкий сірий колір */
-    border-radius: 6px; /* Більше закруглені кути */
-    font-size: 18px; /* Збільшений розмір шрифту */
-    color: #333; /* Темніший текст */
-  }
-  
-  /* Buttons */
-  .dashboard-container button {
-    width: 100%;
-    padding: 14px; /* Більше відступів всередині кнопок */
-    background-color: #007bff; /* М'якший синій колір */
-    color: #fff;
+  .action-btn {
+    background-color: #007aff;
+    color: white;
     border: none;
-    border-radius: 6px; /* Більше закруглені кути */
-    font-size: 18px; /* Збільшений розмір шрифту */
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-size: 1.2rem;
     cursor: pointer;
+    margin: 0 10px;
     transition: background-color 0.3s ease;
-  }
-  
-  .dashboard-container button:hover {
-    background-color: #0056b3; /* Трохи темніший синій */
-  }
-  
-  .dashboard-container button:active {
-    background-color: #004494; /* Ще темніший синій */
-  }
-  
-  /* Error or success messages */
-  .dashboard-container .error-message,
-  .dashboard-container .success-message {
-    margin-top: 20px;
-    font-size: 16px; /* Збільшений розмір шрифту */
-  }
-  
-  .dashboard-container .error-message {
-    color: #e74c3c; /* Оранжево-червоний для помилок */
-  }
-  
-  .dashboard-container .success-message {
-    color: #2ecc71; /* Зелений для успіху */
-  }
-  
-  /* Links */
-  .dashboard-container .login-link,
-  .dashboard-container .terms a {
-    font-size: 16px; /* Збільшений розмір шрифту */
-    color: #007bff; /* М'якший синій колір */
-    text-decoration: none;
-  }
-  
-  .dashboard-container .login-link:hover,
-  .dashboard-container .terms a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Divider for alternative actions */
-  .dashboard-container .or-divider {
-    margin: 25px 0;
-    position: relative;
-    color: #aaa;
-  }
-  
-  .dashboard-container .or-divider::before,
-  .dashboard-container .or-divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 45%; /* Ширша лінія */
-    height: 1px;
-    background-color: #ddd; /* Легкий сірий колір */
-  }
-  
-  .dashboard-container .or-divider::before {
-    left: 0;
-  }
-  
-  .dashboard-container .or-divider::after {
-    right: 0;
-  }
-  
-  /* Option cards */
-  .options-container {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 30px; /* Збільшений відступ між картками */
+    align-items: center;
+    gap: 8px;
   }
   
-  .option-card {
+  .action-btn img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .action-btn:hover {
+    background-color: #005ecb;
+  }
+  
+  /* Повідомлення */
+  .message {
+    font-size: 1rem;
+    text-align: center;
+    color: #ff3b30;
+    margin-bottom: 20px;
+  }
+  
+  /* Список книг */
+  .book-list {
     display: flex;
     flex-direction: column;
+    gap: 10px;
+  }
+  
+  .book-list-item {
+    display: flex;
     align-items: center;
-    cursor: pointer;
-    text-align: center;
-    border: 1px solid #ddd; /* Легкий сірий колір */
+    justify-content: space-between;
+    padding: 10px;
+    background: #f5f5f5;
     border-radius: 8px;
-    padding: 15px; /* Більше відступів всередині карток */
-    background-color: #fff;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Більш розмитий фон */
-    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  .option-card img {
-    width: 70px; /* Збільшене зображення */
-    height: 70px;
+  .book-list-item input[type="checkbox"] {
+    margin-right: 10px;
   }
   
-  .option-card h2 {
-    margin-top: 15px;
-    font-size: 20px; /* Збільшений розмір тексту */
-    color: #333;
-  }
-  
-  .option-card:hover {
-    background-color: #f9f9f9; /* М'якший фоновий колір при наведенні */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Більш виражена тінь */
-  }
-  
-  /* Additional styling for section containers */
-  .dashboard-section {
-    margin-bottom: 40px; /* Збільшений відступ між секціями */
-    padding: 30px; /* Більше відступів всередині секцій */
-    border-radius: 10px; /* Більше закруглені кути */
-    background-color: #fff;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Більш розмитий фон */
-  }
-  
-  .dashboard-section h3 {
-    margin-bottom: 20px;
-    font-size: 24px; /* Збільшений розмір заголовка секції */
-    color: #333;
-  }
-  
-  .dashboard-section p {
-    font-size: 18px; /* Збільшений розмір тексту */
-    color: #555; /* Світліший сірий колір */
-  }
-  
-  .dashboard-section button {
-    margin-top: 15px; /* Збільшений відступ між кнопкою та текстом */
-    background-color: #e74c3c; /* Оранжево-червоний колір для кнопок */
-    color: #fff;
+  .book-list-item .edit-btn {
+    background: #0071e3;
+    color: #ffffff;
     border: none;
-    border-radius: 6px;
-    padding: 10px 20px; /* Більше відступів всередині кнопки */
+    padding: 6px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
+    transition: background 0.3s ease;
   }
   
-  .dashboard-section button:hover {
-    background-color: #c0392b; /* Темніший червоний колір */
+  .book-list-item .edit-btn:hover {
+    background: #005bb5;
   }
   
-  /* Book list styling */
-  .dashboard-section ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .dashboard-section li {
-    margin-bottom: 15px;
-    font-size: 18px; /* Збільшений розмір тексту */
-    color: #333;
-  }
-  
-  .dashboard-section button {
-    background-color: #e74c3c; /* Оранжево-червоний колір для кнопок видалення */
-    color: #fff;
+  .delete-btn {
+    background: #e74c3c;
+    color: #ffffff;
     border: none;
-    border-radius: 6px;
     padding: 8px 16px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 14px;
+    transition: background 0.3s ease;
   }
   
-  .dashboard-section button:hover {
-    background-color: #c0392b; /* Темніший червоний колір */
+  .delete-btn:hover {
+    background: #c0392b;
+  }
+  
+  .view-more-btn {
+    background: #0071e3;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  .view-more-btn:hover {
+    background: #005bb5;
   }
   
