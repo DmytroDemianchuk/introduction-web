@@ -1,84 +1,129 @@
-/* Header Container */
+/* Header container styling */
 .header-container {
-    background-color: #ffffff; /* White background for the header */
-    padding: 20px 0;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for separation */
+    background-color: #ffffff;
+    color: #333;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #e0e0e0; /* Light border for separation */
   }
   
-  /* Header Navigation */
+  /* Navigation styling */
   .header-nav {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
   }
   
-  /* Logo */
+  /* Logo styling */
   .header-logo a {
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
     color: #333;
+    text-decoration: none;
+    font-size: 1.8em; /* Slightly larger for prominence */
+    font-weight: bold;
+    transition: color 0.3s;
   }
   
-  /* Navigation Links */
+  .header-logo a:hover {
+    color: #007bff;
+  }
+  
+  /* Navigation links */
   .header-nav-links {
     list-style: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex: 1;
+    justify-content: center; /* Center links if there's space */
   }
   
   .header-nav-links li {
-    margin: 0;
+    margin: 0 15px; /* Adjusted margin for better spacing */
   }
   
-  .header-nav-links li a {
-    text-decoration: none;
+  .header-nav-links a {
     color: #333;
-    font-size: 16px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s;
   }
   
-  .header-nav-links li a:hover {
-    color: #1a73e8; /* Hover color */
+  .header-nav-links a:hover {
+    color: #007bff;
   }
   
-  /* Buttons Container */
-  .btn {
+  /* Buttons styling */
+  .header-btns {
     display: flex;
-    gap: 10px; /* Space between buttons */
+    align-items: center;
   }
   
-  /* Sign-in Button */
-  .header-signin-btn a {
-    padding: 10px 20px;
-    background-color: #1a73e8;
-    color: white;
-    border-radius: 4px;
+  .header-signin-btn a, 
+  .header-download-btn a, 
+  .header-logout-btn button {
+    color: #fff;
     text-decoration: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .header-signin-btn a:hover {
-    background-color: #155ab6;
-  }
-  
-  /* Download Button */
-  .header-download-btn a {
+    background-color: #007bff;
     padding: 10px 20px;
-    background-color: #1a73e8;
-    color: white;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-left: 10px;
   }
   
-  .header-download-btn a:hover {
-    background-color: #155ab6;
+  .header-signin-btn a:hover, 
+  .header-download-btn a:hover, 
+  .header-logout-btn button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* Profile icon styling */
+  .header-profile-btn img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    transition: border-color 0.3s;
+  }
+  
+  .header-profile-btn img:hover {
+    border-color: #0056b3;
+  }
+  
+  /* Logout button styling */
+  .header-logout-btn button {
+    background-color: #e74c3c;
+  }
+  
+  .header-logout-btn button:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .header-nav-links {
+      flex-direction: column;
+      margin-top: 10px;
+    }
+  
+    .header-nav-links li {
+      margin: 10px 0;
+    }
+  
+    .header-btns {
+      margin-top: 10px;
+      flex-direction: column;
+    }
+  
+    .header-btns div {
+      margin-bottom: 10px;
+    }
   }
   

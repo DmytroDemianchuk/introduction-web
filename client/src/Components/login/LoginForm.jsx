@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css'; // Ensure this path is correct
@@ -8,6 +8,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Перевірка наявності токена при завантаженні компонента
+    const token = Cookies.get('token');
+    if (token) {
+      navigate('/profile');
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,7 +28,7 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         Cookies.set('token', data.token);
-        navigate('/dashboard');
+        navigate('/profile');
       } else {
         setMessage('Failed to login');
       }
@@ -51,7 +59,6 @@ const Login = () => {
           <button type="submit">Login</button>
         </form>
         {message && <p>{message}</p>}
-        
         <p className="signup-link">
           Don't have an account? <a href="/signup">Sign Up</a>
         </p>

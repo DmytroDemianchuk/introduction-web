@@ -17,19 +17,19 @@
 
 /* Container for the login form */
 .login-container {
-  max-width: 400px;
-  padding: 30px 40px; /* Same padding as signup form */
-  border-radius: 12px;
+  max-width: 360px;
+  padding: 30px;
+  border-radius: 8px; /* Slightly smaller radius for consistency */
   background-color: #ffffff;
   text-align: center;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer shadow for a clean look */
   border: 1px solid #e0e0e0; /* Light border for a cleaner look */
 }
 
 /* Heading */
 .login-container h1 {
-  margin-bottom: 16px;
-  font-size: 26px; /* Match signup form */
+  margin-bottom: 20px;
+  font-size: 24px; /* Slightly smaller size for consistency */
   color: #333;
   font-weight: bold;
 }
@@ -38,39 +38,40 @@
 .login-container form {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Increased gap between fields for consistency */
+  gap: 15px; /* Consistent gap between fields */
 }
 
 /* Input fields */
 .login-container input {
-  padding: 15px; /* Same padding as signup form */
+  padding: 12px;
   border: 1px solid #ddd;
-  border-radius: 6px; /* Same radius as signup form */
-  font-size: 16px;
-  margin-bottom: 10px; /* Match spacing with signup form */
+  border-radius: 5px; /* Consistent radius with signup form */
+  font-size: 15px; /* Consistent font size with signup form */
+  margin-bottom: 15px; /* Consistent spacing with signup form */
 }
 
 /* Submit button */
 .login-container button {
-  padding: 15px;
+  padding: 12px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   width: 100%; /* Full width button */
 }
 
 .login-container button:hover {
   background-color: #0056b3;
+  transform: scale(1.02); /* Slight scale effect for button */
 }
 
 /* Error message */
 .login-container p {
-  color: #d9534f; /* Red color for error */
+  color: #e74c3c; /* Red color for error */
   font-size: 14px;
   margin-top: 10px;
 }
@@ -86,8 +87,24 @@
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
+  transition: text-decoration 0.2s;
 }
 
 .signup-link a:hover {
   text-decoration: underline;
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 20px;
+  }
+  
+  .login-container h1 {
+    font-size: 20px;
+  }
+  
+  .login-container button {
+    font-size: 14px;
+  }
 }

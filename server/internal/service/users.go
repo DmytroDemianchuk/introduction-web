@@ -2,38 +2,38 @@ package service
 
 import (
 	"context"
-	"errors"
-	"fmt"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/dmytrodemianchuk/go-auth-mongo/internal/domain"
-	"github.com/dmytrodemianchuk/go-auth-mongo/pkg/hash" // Import the hash package
-	"github.com/golang-jwt/jwt"
+	"github.com/dmytrodemianchuk/go-auth-mongo/internal/repository"
+	"github.com/dmytrodemianchuk/go-auth-mongo/pkg/hash"
 )
 
-type UsersRepository interface {
-	Create(ctx context.Context, user domain.User) error
-	GetByCredentials(ctx context.Context, email string) (domain.User, error) // Fetch by email only
-}
-
 type Users struct {
-	repo       UsersRepository
-	hasher     *hash.Hasher
-	hmacSecret []byte
-	tokenTtl   time.Duration
+	repo         *repository.UsersRepository
+	hasher       *hash.Hasher
+	jwtSecret    []byte
+	tokenExpires time.Duration
 }
 
-func NewUsers(repo UsersRepository, hasher *hash.Hasher, secret []byte, ttl time.Duration) *Users {
-	return &Users{
-		repo:       repo,
-		hasher:     hasher,
-		hmacSecret: secret,
-		tokenTtl:   ttl,
-	}
+func NewUsers(repo *repository.UsersRepository, hasher *hash.Hasher, jwtSecret []byte, tokenExpires time.Duration) *Users {
+	return &Users{repo: repo, hasher: hasher, jwtSecret: jwtSecret, tokenExpires: tokenExpires}
 }
 
-func (s *Users) SignUp(ctx context.Context, inp domain.SignUpInput) error {
-	password, err := s.hasher.Hash(inp.Password)
+type SignUpInput struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type SignInInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+func (s *Users) SignUp(ctx context.Context, inp SignUpInput) error {
+	hashedPassword, err := s.hasher.Hash(inp.Password)
 	if err != nil {
 		return err
 	}
@@ -41,59 +41,65 @@ func (s *Users) SignUp(ctx context.Context, inp domain.SignUpInput) error {
 	user := domain.User{
 		Name:         inp.Name,
 		Email:        inp.Email,
-		Password:     password,
+		Password:     hashedPassword,
 		RegisteredAt: time.Now(),
 	}
 
 	return s.repo.Create(ctx, user)
 }
 
-func (s *Users) SignIn(ctx context.Context, inp domain.SignInInput) (string, error) {
+func (s *Users) SignIn(ctx context.Context, inp SignInInput) (string, error) {
 	user, err := s.repo.GetByCredentials(ctx, inp.Email)
 	if err != nil {
-		if errors.Is(err, domain.ErrUserNotFound) {
-			return "", domain.ErrUserNotFound
-		}
 		return "", err
 	}
 
 	if err := s.hasher.Compare(user.Password, inp.Password); err != nil {
-		return "", domain.ErrUserNotFound
+		return "", err
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Subject:   user.ID,
-		IssuedAt:  time.Now().Unix(),
-		ExpiresAt: time.Now().Add(s.tokenTtl).Unix(),
-	})
-
-	return token.SignedString(s.hmacSecret)
-}
-
-func (s *Users) ParseToken(ctx context.Context, token string) (string, error) {
-	t, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
-		}
-		return s.hmacSecret, nil
-	})
+	token, err := s.createToken(user.ID)
 	if err != nil {
 		return "", err
 	}
 
-	if !t.Valid {
-		return "", errors.New("invalid token")
+	return token, nil
+}
+
+func (s *Users) ParseToken(ctx context.Context, tokenStr string) (string, error) {
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		return s.jwtSecret, nil
+	})
+
+	if err != nil {
+		return "", err
 	}
 
-	claims, ok := t.Claims.(jwt.MapClaims)
-	if !ok {
-		return "", errors.New("invalid claims")
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		id, ok := claims["id"].(string)
+		if !ok {
+			return "", jwt.ErrSignatureInvalid
+		}
+		return id, nil
 	}
 
-	subject, ok := claims["sub"].(string)
-	if !ok {
-		return "", errors.New("invalid subject")
+	return "", jwt.ErrSignatureInvalid
+}
+
+func (s *Users) GetUserByID(ctx context.Context, id string) (domain.User, error) {
+	return s.repo.GetByID(ctx, id)
+}
+
+func (s *Users) GetUserByName(ctx context.Context, name string) (domain.User, error) {
+	return s.repo.GetByName(ctx, name)
+}
+
+func (s *Users) createToken(userID string) (string, error) {
+	claims := jwt.MapClaims{
+		"id":  userID,
+		"exp": time.Now().Add(s.tokenExpires).Unix(),
 	}
 
-	return subject, nil
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	return token.SignedString(s.jwtSecret)
 }
