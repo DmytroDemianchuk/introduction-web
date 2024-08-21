@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import './SignUpForm.css';
 
 const SignUpForm = () => {
@@ -8,6 +9,15 @@ const SignUpForm = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Перевірка наявності токена при завантаженні компонента
+    const token = Cookies.get('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,16 +25,25 @@ const SignUpForm = () => {
     const requestBody = { name, email, password };
 
     try {
-      const response = await axios.post('http://localhost:8080/signup', requestBody);
-
+      await axios.post('http://localhost:8080/signup', requestBody);
       setMessage('Signup successful!');
       setIsError(false);
     } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
       setMessage(error.response ? error.response.data.message : 'Something went wrong');
       setIsError(true);
     }
   };
+
+  if (isLoggedIn) {
+    return (
+      <div className="signup-parent-container">
+        <div className="signup-container">
+          <h2>You are already logged in</h2>
+          <p>Would you like to <a href="/profile">view your profile</a> or <a href="/logout">logout</a>?</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="signup-parent-container">

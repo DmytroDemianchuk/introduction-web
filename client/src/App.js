@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './Components/header/Header';
@@ -10,6 +9,8 @@ import ProtectedRoute from './Components/protected/ProtectedRoute';
 import Support from './Components/support/Support';
 import FAQ from './Components/faq/FAQ';
 import Footer from './Components/footer/Footer';
+import Profile from './Components/profile/Profile';
+import Logout from './Components/logout/Logout'; // Імпорт компонента Logout
 
 const App = () => {
   return (
@@ -27,6 +28,12 @@ const App = () => {
           } />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
+          <Route path="/logout" element={<Logout />} /> {/* Додайте маршрут для Logout */}
         </Routes>
       </div>
       <Footer />
